@@ -1,0 +1,5 @@
+public/megalive.MP4 filter=lfs diff=lfs merge=lfs -text
+public/video_bds.mp4 filter=lfs diff=lfs merge=lfs -text
+public/video_clb.mp4 filter=lfs diff=lfs merge=lfs -text
+public/video_stu1.mp4 filter=lfs diff=lfs merge=lfs -text
+public/video_stu2.mp4 filter=lfs diff=lfs merge=lfs -text
