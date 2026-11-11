@@ -57,7 +57,7 @@ const services = [
   },
 ];
 
-const headingParts = { start: "Port", emphasis: "folio", end: "." };
+const headingParts = { start: "Port", emphasis: "folio", end: "" };
 const fullHeadingLength = Object.values(headingParts).join("").length;
 
 function glow(e: MouseEvent<HTMLElement>) {
@@ -144,8 +144,7 @@ function TypewriterHeading() {
     >
       <span aria-hidden="true">
         {headingParts.start.slice(0, typedCount)}
-        <span className="italic text-primary underline decoration-primary/30 decoration-4 underline-offset-8">
-          {headingParts.emphasis.slice(
+<span className="text-metallic-orange inline-block italic tracking-[-0.01em] underline decoration-primary/30 decoration-4 underline-offset-8">          {headingParts.emphasis.slice(
             0,
             Math.max(0, typedCount - headingParts.start.length),
           )}
@@ -298,31 +297,36 @@ export default function Home() {
             </a>
           </div>
           <div className="reveal mt-10 flex flex-wrap gap-4">
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .getElementById("work")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className={`rounded-full bg-primary px-7 py-4 text-primary-foreground transition hover:-translate-y-0.5 hover:shadow-var(--shadow-glass) ${label}`}
-            >
-              explore my work →
-            </a>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-              onMouseMove={glow}
-              className={`glass rounded-full px-7 py-4 ${label}`}
-            >
-              Let's Connect
-            </a>
+            <div className="hero-action-float">
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document
+                    .getElementById("work")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+                onMouseMove={glow}
+                className={`liquid-glass-button inline-flex items-center rounded-full bg-metallic-orange px-7 py-4 text-white shadow-sm transition hover:-translate-y-0.5 hover:brightness-105 hover:shadow-var(--shadow-glass) focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${label}`}
+              >
+                <span>explore my work →</span>
+              </a>
+            </div>
+            <div className="hero-action-float">
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document
+                    .getElementById("contact")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+                onMouseMove={glow}
+                className={`glass liquid-glass-button inline-flex items-center rounded-full px-7 py-4 transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${label}`}
+              >
+                <span>Let's Connect</span>
+              </a>
+            </div>
           </div>
         </div>
         <div className="relative md:col-span-5">
@@ -441,7 +445,7 @@ export default function Home() {
 
       {/* SERVICES */}
       <section id="services" className="mx-auto max-w-7xl px-6 py-0">
-        <p className="font-mono text-lg uppercase tracking-[0.25em] text-primary">03 — Kinh nghiệm làm việc</p>
+        <p className="font-mono text-lg uppercase tracking-[0.25em] text-primary">03 — Work Experience</p>
         <div className="mx-auto mt-10 max-w-5xl space-y-8">
           {services.map((service) => (
             <article
