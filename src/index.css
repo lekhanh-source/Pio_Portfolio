@@ -118,6 +118,8 @@
 
 @keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-12px) } }
 @utility animate-float { animation: float 6s ease-in-out infinite; }
+@keyframes cursor-blink { 50% { opacity: 0 } }
+@utility animate-cursor-blink { animation: cursor-blink .8s step-end infinite; }
 
 @layer base {
   * {
