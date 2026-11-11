@@ -447,7 +447,7 @@ export default function Home() {
             <article
               key={service.title}
               onMouseMove={glow}
-              className="reveal relative rounded-3xl border-2 border-dashed border-primary/75 bg-white/40 px-5 pb-5 pt-7 text-primary transition duration-300 hover:bg-primary/5 sm:px-7"
+              className="reveal relative rounded-3xl border-2 border-dashed border-primary/75 bg-white/40 px-5 pb-5 pt-7 text-primary transition duration-300 hover:bg-primary/5 sm:px-7 cursor-pointer"
             >
               <h3 className="absolute left-5 top-0 max-w-[calc(100%-2.5rem)] -translate-y-1/2 rounded-lg bg-primary px-3 py-1.5 text-left font-display text-xs font-extrabold leading-tight text-primary-foreground shadow-sm sm:left-7 sm:text-sm">
                 {service.title}
@@ -468,7 +468,7 @@ export default function Home() {
       <section id="work" className="mx-auto max-w-7xl px-6 py-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <p className={`${label} text-primary`}>04 — Featured projects</p>
+            <p className={`font-mono uppercase tracking-[0.25em]text-primary text-lg text-primary`}>04 — Featured projects</p>
             <h2 className="mt-4 font-display text-5xl font-extrabold tracking-[-0.03em] md:text-7xl">
               Featured Projects
             </h2>
