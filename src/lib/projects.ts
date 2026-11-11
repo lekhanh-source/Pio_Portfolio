@@ -1,6 +1,6 @@
 import pMart from "../assets/p-mart.jpg";
 import pFood from "../assets/p-food.jpg";
-import pHT from "../assets/p-HANGTHU.jpg";
+import pHT from "../assets/p-hangthu.jpg";
 
 export type Video = {
   title: string;
