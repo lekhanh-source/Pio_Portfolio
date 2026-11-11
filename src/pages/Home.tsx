@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import portrait from "../assets/portrait.jpg";
 import about from "../assets/about.jpg";
@@ -169,14 +169,70 @@ function TypewriterHeading() {
 const label = "font-mono text-xs uppercase tracking-[0.25em]";
 
 export default function Home() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   useReveal();
+  const [activeNavSection, setActiveNavSection] = useState("top");
   useEffect(() => {
     document.title = "Hoàng Thị Hậu — Content Creator & Content Marketing";
   }, []);
+  useEffect(() => {
+    const sectionIds = ["about", "services", "work", "contact"];
+    const updateActiveSection = () => {
+      const isNearPageBottom =
+        window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight - 80;
+      if (isNearPageBottom) {
+        setActiveNavSection("contact");
+        return;
+      }
+
+      const activeLine = window.innerHeight * 0.45;
+      const currentSection = sectionIds
+        .map((id) => document.getElementById(id))
+        .filter((section): section is HTMLElement => section !== null)
+        .reverse()
+        .find((section) => section.getBoundingClientRect().top <= activeLine);
+
+      setActiveNavSection(
+        currentSection?.id === "work" ? "services" : currentSection?.id ?? "top",
+      );
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, []);
+  useEffect(() => {
+    const target = location.state?.scrollTo;
+    if (typeof target !== "string") return;
+
+    const timeout = window.setTimeout(() => {
+      document.getElementById(target)?.scrollIntoView({ behavior: "smooth" });
+      navigate(location.pathname, { replace: true, state: null });
+    }, 0);
+
+    return () => window.clearTimeout(timeout);
+  }, [location.pathname, location.state, navigate]);
   const [filter, setFilter] = useState("All");
-  const cats = ["All", ...Array.from(new Set(projects.map((p) => p.category)))];
+  const featuredProjects = projects.filter(
+    (project) =>
+      project.title !== "NHA KHOA V DENTAL" &&
+      project.title !== "Xưởng cà phê Leo Arabica",
+  );
+  const cats = [
+    "All",
+    ...Array.from(new Set(featuredProjects.map((project) => project.category))),
+  ];
   const shown =
-    filter === "All" ? projects : projects.filter((p) => p.category === filter);
+    filter === "All"
+      ? featuredProjects
+      : featuredProjects.filter((project) => project.category === filter);
 
   return (
     <div className="relative overflow-x-clip">
@@ -203,14 +259,19 @@ export default function Home() {
           </a>
           <div className={`hidden gap-8 md:flex ${label}`}>
             <a
-              href="#"
+              href="/about"
               onClick={(e) => {
                 e.preventDefault();
                 document
                   .getElementById("about")
                   ?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="hover:text-primary"
+              aria-current={activeNavSection === "about" ? "location" : undefined}
+              className={`hover:text-primary ${
+                activeNavSection === "about"
+                  ? "text-primary underline decoration-2 underline-offset-8"
+                  : ""
+              }`}
             >
               About
             </a>
@@ -222,7 +283,12 @@ export default function Home() {
                   .getElementById("services")
                   ?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="hover:text-primary"
+              aria-current={activeNavSection === "services" ? "location" : undefined}
+              className={`hover:text-primary ${
+                activeNavSection === "services"
+                  ? "text-primary underline decoration-2 underline-offset-8"
+                  : ""
+              }`}
             >
               project
             </a>
@@ -234,7 +300,12 @@ export default function Home() {
                   .getElementById("contact")
                   ?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="hover:text-primary"
+              aria-current={activeNavSection === "contact" ? "location" : undefined}
+              className={`hover:text-primary ${
+                activeNavSection === "contact"
+                  ? "text-primary underline decoration-2 underline-offset-8"
+                  : ""
+              }`}
             >
               Contact
             </a>
@@ -247,7 +318,12 @@ export default function Home() {
                 .getElementById("contact")
                 ?.scrollIntoView({ behavior: "smooth" });
             }}
-            className={`rounded-full bg-foreground px-4 py-2 text-background ${label} text-[10px]`}
+            aria-current={activeNavSection === "contact" ? "location" : undefined}
+            className={`rounded-full bg-foreground px-4 py-2 text-background ${label} text-[10px] ${
+              activeNavSection === "contact"
+                ? "text-primary underline decoration-2 underline-offset-4"
+                : ""
+            }`}
           >
             Hire me
           </a>
@@ -495,13 +571,19 @@ export default function Home() {
           </div>
         </div>
         <div key={filter} className="filter-results mt-14 space-y-20">
-          {shown.map((p, i) => (
-            <article
-              key={p.title}
-              className={`filter-item grid items-center gap-8 md:grid-cols-12 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}
-            >
+          {shown.map((p, i) => {
+            const projectUrl =
+              p.category === "FREELANCE - PARTIME"
+                ? "/freelancer"
+                : `/work/${p.slug}`;
+
+            return (
+              <article
+                key={p.title}
+                className={`filter-item grid items-center gap-8 md:grid-cols-12 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}
+              >
               <Link
-                to={`/work/${p.slug}`}
+                to={projectUrl}
                 className="group relative overflow-hidden rounded-[2rem] md:col-span-7"
               >
                 <span
@@ -538,14 +620,15 @@ export default function Home() {
                   {p.result}
                 </p>
                 <Link
-                  to={`/work/${p.slug}`}
+                  to={projectUrl}
                   className={`mt-5 inline-block font-mono font-semibold text-s uppercase text-orange-600`}
                 >
                   Xem chi tiết →
                 </Link>
               </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </section>
 

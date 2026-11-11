@@ -71,12 +71,37 @@ export const projects: Project[] = [
     intro:
       "Uyên Uyên Mart là hệ thống siêu thị FMCG tại Nha Trang, cung cấp đa dạng sản phẩm tiêu dùng thiết yếu cho gia đình. Thương hiệu hướng đến hình ảnh gần gũi, tiện lợi, giá tốt và phù hợp với nhu cầu mua sắm hằng ngày của khách hàng địa phương.",
     resultImages: [
-      { title: "", url: "/images/UUM_kq1.jpg" },
-      { title: "", url: "/images/UUM_kq2.jpg" },
+      { title: "", url: "/images/UUM_kq.jpg" },
     ],
     images: [
-      { title: "", url: "/images/UUM_img1.jpg" },
-      { title: "", url: "/images/UUM_img2.jpg" },
+      {
+        title: "",
+        url: "https://hoangthihau.my.canva.site/about/_assets/media/20303bd3fa9619bfd7896236a6a4187d.png",
+      },
+      {
+        title: "",
+        url: "https://hoangthihau.my.canva.site/about/_assets/media/cf8607e4dc98edcd4240718fa5e056c2.png",
+      },
+      {
+        title: "",
+        url: "https://hoangthihau.my.canva.site/about/_assets/media/f8dce59da4d603c160cb2eb1191180bb.png",
+      },
+      {
+        title: "",
+        url: "https://hoangthihau.my.canva.site/about/_assets/media/58a0f2a12e506f51c394eecb8cffbce6.png",
+      },
+      {
+        title: "",
+        url: "https://hoangthihau.my.canva.site/about/_assets/media/a33e101b1deb763777529d7574d4e2d9.png",
+      },
+      {
+        title: "",
+        url: "https://hoangthihau.my.canva.site/about/_assets/media/1de4923154dcfed0069458cc8b052aee.png",
+      },
+      {
+        title: "",
+        url: "https://hoangthihau.my.canva.site/about/_assets/media/8c18da6e1349b75f4ae24b6a0fb8f334.png",
+      },
     ],
     caseStudy: {
       title: " 📍THẾ GIỚI GIA DUNG UYÊN UYÊN",
@@ -131,7 +156,7 @@ export const projects: Project[] = [
     result: "Content · Short video · Mega live",
     intro:
       "Tại CT TNHH Hằng Thu Media, đảm nhận hai vai trò Content và Host Livestream: lên kế hoạch nội dung hàng tháng, triển khai kế hoạch, viết kịch bản short video, dẫn livestream và xây dựng kịch bản mega live.",
-    images: [],
+    images: [{ title: "", url: "" }],
     videos: [],
   },
 
@@ -199,8 +224,8 @@ export const projects: Project[] = [
 
   // project 5
   {
-    slug: "leo-arabica",
-    title: "XƯỞNG CÀ PHÊ LEO ARABICA",
+    slug: "Freelance",
+    title: "Xưởng cà phê Leo Arabica",
     industry: "F&B",
     category: "FREELANCE - PARTIME",
     role: "Content Marketing",
@@ -208,8 +233,8 @@ export const projects: Project[] = [
     image: pLEO,
     tasks: [
       "Lên kế hoạch content hàng tháng",
-      "Triển khai kế hoạch nội dung",
       "Thiết kế poster",
+      "Triển khai kế hoạch nội dung",
     ],
     result: "Content Marketing & thiết kế poster",
     intro:
@@ -219,7 +244,7 @@ export const projects: Project[] = [
 
   // project 6
   {
-    slug: "v-dental",
+    slug: "Freelance",
     title: "NHA KHOA V DENTAL",
     industry: "Y tế · Nha khoa",
     category: "FREELANCE - PARTIME",
@@ -231,6 +256,62 @@ export const projects: Project[] = [
     intro:
       "Phụ trách Content Marketing cho Nha khoa V Dental, thực hiện viết nội dung và thiết kế poster.",
     videos: [],
+  },
+  //project 7
+   {
+    slug: "Freelancer",
+    title: "FREELANCE - PARTIME",
+    industry: "F&B",
+    category: "FREELANCE - PARTIME",
+    role: "Content Marketing",
+    period: "Freelance",
+    image: pLEO,
+    tasks: [
+      "Admin kênh: Pio Đi Đâu Đấy",
+      "Content Marketing - Nha Khoa V Dental",
+      "Content Marketing - Xưởng cà phê LEO Arabica",
+      "Event Runner - Hộ Kinh Doanh Mai Thanh Hùng",
+      "Video editor, VJ",
+    ],
+    result: "Content Marketing & thiết kế poster",
+    intro:
+      "Phụ trách Content Marketing cho Xưởng cà phê LEO Arabica: lên kế hoạch nội dung hàng tháng, triển khai kế hoạch và thiết kế poster.",
+    videos: [],
+  },
+  {
+    slug: "Pio",
+    title: "NHA KHOA V DENTAL",
+    industry: "Y tế · Nha khoa",
+    category: "FREELANCE - PARTIME",
+    role: "Content Marketing",
+    period: "Chưa cập nhật",
+    image: pDental,
+    tasks: ["Viết content", "Thiết kế poster"],
+    result: "Content & thiết kế poster",
+    intro:
+      "Phụ trách Content Marketing cho Nha khoa V Dental, thực hiện viết nội dung và thiết kế poster.",
+      images: [
+        { title: "", url: "/images/pio_page.jpg" },
+        { title: "", url: "/images/pio_di_dau.jpg" },
+      ],
+    videos: [
+      {
+        title: "Chợ đêm Nha Trang",
+        platform: "TikTok",
+        orientation: "portrait",
+        sourceFile: "/pio_video1.mp4",
+        url: "https://www.tiktok.com/@pio.didau/video/7680482467232386324?is_from_webapp=1&sender_device=pc",
+        stats: { views: "34,76K", likes: "471" },
+      },
+      {
+        title: "Mukbang mì khổng lồ",
+        platform: "TikTok",
+        orientation: "portrait",
+        sourceFile: "/pio_video2.mp4",
+        url: "https://www.tiktok.com/@pio.didau/video/7696375624700661012?is_from_webapp=1&sender_device=pc",
+        stats: { views: "4,993", likes: "85" },
+      },
+    ],
   },
 ];
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { projects, embedUrl, type ProjectImage } from "../lib/projects";
 
@@ -34,6 +34,7 @@ function ResultImageFigure({ image }: { image: ProjectImage }) {
 export default function Work() {
   const { slug } = useParams();
   const [selectedImage, setSelectedImage] = useState<ProjectImage | null>(null);
+  const imagesCarouselRef = useRef<HTMLDivElement>(null);
   const p = projects.find((x) => x.slug === slug);
   useEffect(() => { window.scrollTo(0, 0); if (p) document.title = `${p.title} — Hoàng Thị Hậu`; }, [p]);
   useEffect(() => {
@@ -94,8 +95,17 @@ export default function Work() {
                 <h3 className="font-display text-2xl font-extrabold">Kết quả</h3>
                 <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{p.caseStudy.resultDetail}</p>
                 {p.resultImages && p.resultImages.length > 0 && (
-                  <div className="mt-6 grid gap-5 sm:grid-cols-2">
-                    {p.resultImages.map((image) => <ResultImageFigure key={image.title} image={image} />)}
+                  <div className="mt-6 grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-2">
+                    {p.resultImages.map((image) => (
+                      <div
+                        key={image.url}
+                        className={`w-full max-w-sm ${
+                          p.resultImages?.length === 1 ? "sm:col-span-2" : ""
+                        }`}
+                      >
+                        <ResultImageFigure image={image} />
+                      </div>
+                    ))}
                   </div>
                 )}
               </article>
@@ -110,19 +120,61 @@ export default function Work() {
             <div className="mt-10">
               <h3 className="font-display text-2xl font-extrabold">Hình ảnh</h3>
               {p.images.length > 0 ? (
-                <div className="mt-5 grid items-start gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {p.images.map((image) => (
-                    <figure key={image.url} className="glass rounded-3xl p-3">
-                      <button
-                        type="button"
-                        onClick={() => setSelectedImage(image)}
-                        aria-label={`Mở ảnh kích thước đầy đủ: ${image.alt ?? image.title}`}
-                        className="block w-full cursor-zoom-in rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                <div className="mt-5 overflow-hidden">
+                  <div className="mb-5 flex items-center justify-end gap-2">
+                    <button
+                      type="button"
+                      aria-label="Xem ảnh trước"
+                      onClick={() =>
+                        imagesCarouselRef.current?.scrollBy({
+                          left: -imagesCarouselRef.current.clientWidth * 0.8,
+                          behavior: "smooth",
+                        })
+                      }
+                      className="grid h-11 w-11 place-items-center rounded-full border bg-white/50 text-lg transition hover:border-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    >
+                      ←
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Xem ảnh tiếp theo"
+                      onClick={() =>
+                        imagesCarouselRef.current?.scrollBy({
+                          left: imagesCarouselRef.current.clientWidth * 0.8,
+                          behavior: "smooth",
+                        })
+                      }
+                      className="grid h-11 w-11 place-items-center rounded-full border bg-white/50 text-lg transition hover:border-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    >
+                      →
+                    </button>
+                  </div>
+                  <div
+                    ref={imagesCarouselRef}
+                    className="image-carousel flex snap-x snap-mandatory gap-2 overflow-x-hidden pb-4"
+                    aria-label="Carousel hình ảnh"
+                  >
+                    {p.images.map((image) => (
+                      <figure
+                        key={image.url}
+                        className="w-[85%] shrink-0 snap-start sm:w-[55%] lg:w-[32%]"
                       >
-                        <img src={image.url} alt={image.alt ?? image.title} className="block h-auto w-full rounded-2xl object-contain" loading="lazy" />
-                      </button>
-                    </figure>
-                  ))}
+                        <button
+                          type="button"
+                          onClick={() => setSelectedImage(image)}
+                          aria-label={`Mở ảnh kích thước đầy đủ: ${image.alt ?? image.title}`}
+                          className="block w-full cursor-zoom-in rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                        >
+                          <img
+                            src={image.url}
+                            alt={image.alt ?? image.title}
+                            className="block h-auto w-full rounded-2xl border-4 border-white object-contain shadow-lg sm:h-80"
+                            loading="lazy"
+                          />
+                        </button>
+                      </figure>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 <p className="mt-5 rounded-2xl border border-dashed p-6 text-sm text-muted-foreground">
