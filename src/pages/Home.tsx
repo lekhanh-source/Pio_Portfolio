@@ -337,13 +337,13 @@ export default function Home() {
           </div>
           <div
             onMouseMove={glow}
-            className="glass animate-float absolute -left-10 bottom-10 rounded-3xl p-6 md:-left-24 md:px-8 md:py-7"
+            className="glass animate-float absolute inset-x-2 bottom-10 min-w-0 rounded-3xl p-4 sm:p-5 md:inset-x-auto md:-left-24 md:px-8 md:py-7"
           >
             <p className={`${label} text-muted-foreground`}>Họ và Tên</p>
-            <p className="font-display text-3xl font-extrabold text-orange-600">
+            <p className="break-words font-display text-2xl font-extrabold text-orange-600 sm:text-3xl">
               HOÀNG THỊ HẬU
             </p>
-            <p className="mt-2 text-base text-muted-foreground">
+            <p className="mt-2 break-words text-sm text-muted-foreground sm:text-base">
               Content Creator | Content Marketing | Video Production
             </p>
           </div>
@@ -421,7 +421,7 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-4 pt-4">
               {[
                 { n: 2, l: "Years of marketing experience" },
-                { n: 5, l: "Freelance projects" },
+                { n: projects.length, l: "Projects" },
               ].map((s) => (
                 <div
                   key={s.l}
@@ -470,7 +470,7 @@ export default function Home() {
           <div>
             <p className={`${label} text-primary`}>04 — Featured projects</p>
             <h2 className="mt-4 font-display text-5xl font-extrabold tracking-[-0.03em] md:text-7xl">
-              Selected Work.
+              Featured Projects
             </h2>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -478,18 +478,23 @@ export default function Home() {
               <button
                 key={c}
                 onClick={() => setFilter(c)}
-                className={`rounded-full px-4 py-2 font-mono text-xs transition ${filter === c ? "bg-foreground text-background" : "border hover:border-primary"}`}
+                aria-pressed={filter === c}
+                className={`rounded-full border px-4 py-2 font-mono text-xs transition-all duration-300 ease-out hover:-translate-y-0.5 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer ${
+                  filter === c
+                    ? "border-foreground bg-foreground text-background hover:brightness-110"
+                    : "border-foreground/15 bg-white/25 hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
+                }`}
               >
                 {c}
               </button>
             ))}
           </div>
         </div>
-        <div className="mt-14 space-y-20">
+        <div key={filter} className="filter-results mt-14 space-y-20">
           {shown.map((p, i) => (
             <article
               key={p.title}
-              className={`reveal grid items-center gap-8 md:grid-cols-12 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}
+              className={`filter-item grid items-center gap-8 md:grid-cols-12 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}
             >
               <Link
                 to={`/work/${p.slug}`}
@@ -506,7 +511,7 @@ export default function Home() {
                   loading="lazy"
                   width={1024}
                   height={768}
-                  className="aspect-4/3 w-full object-cover transition duration-700 group-hover:scale-105"
+                  className="aspect-4/3 w-full object-fit transition duration-700 group-hover:scale-105"
                 />
               </Link>
               <div
@@ -541,32 +546,74 @@ export default function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="mx-auto max-w-7xl px-6 py-28">
-        <div onMouseMove={glow} className="glass rounded-[2.5rem] p-10 md:p-16">
-          <p className={`${label} text-primary`}>05 — Contact</p>
-          <h2 className="mt-4 font-display text-5xl font-extrabold tracking-[-0.03em] md:text-8xl">
-            Let's create
-            <br />
-            something <span className="italic text-primary">real.</span>
-          </h2>
-          <div className="mt-10 flex flex-wrap gap-4">
+      <section id="contact" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 md:py-28">
+        <div className="contact-card reveal rounded-[2rem] p-6 sm:rounded-[2.5rem] sm:p-8 md:p-12 lg:p-16">
+          <div className="relative z-10">
+            <p className={`${label} reveal text-primary`}>05 — Contact</p>
+            <h2 className="reveal mt-4 max-w-5xl font-display text-4xl font-extrabold leading-[0.98] tracking-[-0.045em] text-balance sm:text-5xl md:text-7xl lg:text-8xl">
+              Let's create
+              <br />
+              something <span className="italic text-primary">real.</span>
+            </h2>
+            <p className="reveal mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
+              Open to creative collaborations, new opportunities, and
+              interesting conversations.
+            </p>
+            <div className="reveal mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4">
             <a
-              href="mailto:hello@example.com"
-              className={`rounded-full bg-primary px-7 py-4 text-primary-foreground ${label}`}
+              href="mailto:hthau223@gmail.com"
+              aria-label="Email Hoàng Thị Hậu"
+              className={`group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-primary px-7 py-4 text-primary-foreground shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:brightness-105 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:w-auto ${label}`}
             >
               Email me
+              <span
+                aria-hidden="true"
+                className="inline-block text-base transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              >
+                ↗
+              </span>
             </a>
-            <a href="#" className={`rounded-full border px-7 py-4 ${label}`}>
+            <a
+              href="https://www.facebook.com/pio.hau.223"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Hoàng Thị Hậu on Facebook (opens in a new tab)"
+              className={`group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full border border-foreground/15 bg-white/25 px-7 py-4 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/35 hover:bg-primary/10 hover:text-primary hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:w-auto ${label}`}
+            >
               Facebook
+              <span
+                aria-hidden="true"
+                className="inline-block text-base transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              >
+                ↗
+              </span>
             </a>
-            <a href="#" className={`rounded-full border px-7 py-4 ${label}`}>
+            <a
+              href="https://www.tiktok.com/@pio.didau"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Hoàng Thị Hậu on TikTok (opens in a new tab)"
+              className={`group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full border border-foreground/15 bg-white/25 px-7 py-4 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/35 hover:bg-primary/10 hover:text-primary hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:w-auto ${label}`}
+            >
               TikTok
+              <span
+                aria-hidden="true"
+                className="inline-block text-base transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              >
+                ↗
+              </span>
             </a>
+            </div>
           </div>
         </div>
-        <p className="mt-10 text-center font-mono text-xs text-muted-foreground">
-          © 2026 Hoàng Thị Hậu
-        </p>
+        <footer className="mt-8 flex flex-col items-center gap-2 text-center sm:mt-10">
+          <p className="font-mono text-xs text-muted-foreground">
+            © 2026 Hoàng Thị Hậu
+          </p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/75">
+            Designed &amp; developed with passion.
+          </p>
+        </footer>
       </section>
     </div>
   );

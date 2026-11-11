@@ -1,6 +1,9 @@
 import pMart from "../assets/p-mart.jpg";
 import pFood from "../assets/p-food.jpg";
 import pHT from "../assets/p-hangthu.jpg";
+import pKOC from "../assets/p-KOC.jpg";
+import pLEO from "../assets/p-LEO.jpg";
+import pDental from "../assets/p-dental.avif";
 
 export type Video = {
   title: string;
@@ -114,7 +117,7 @@ export const projects: Project[] = [
     slug: "freelance-video",
     title: "HẰNG THU MEDIA",
     industry: "Agency · Truyền thông",
-    category: "Content & Livestream",
+    category: "Content Marketing",
     role: "Content · Host Livestream",
     period: "Freelance",
     image: pHT,
@@ -137,7 +140,7 @@ export const projects: Project[] = [
     slug: "food-review",
     title: "ALIBABA MEDIA",
     industry: "Truyền thông · F&B",
-    category: "Food Review",
+    category: "Content CREATOR",
     role: "Content Creator - Food Review",
     period: "Freelance",
     image: pFood,
@@ -178,10 +181,10 @@ export const projects: Project[] = [
     slug: "again-group",
     title: "AGAIN GROUP",
     industry: "Giáo dục · Đào tạo",
-    category: "Đào tạo & vận hành",
+    category: "Part time - TRỢ LÝ KOC",
     role: "Thư ký - Trợ lý",
     period: "05/2024 — 09/2024",
-    image: "/images/p-again.jpg",
+    image: pKOC,
     tasks: [
       "Tổ chức các buổi đào tạo thành viên",
       "Viết nội dung",
@@ -198,11 +201,11 @@ export const projects: Project[] = [
   {
     slug: "leo-arabica",
     title: "XƯỞNG CÀ PHÊ LEO ARABICA",
-    industry: "F&B · Cà phê",
-    category: "Content Marketing",
+    industry: "F&B",
+    category: "FREELANCE - PARTIME",
     role: "Content Marketing",
     period: "Freelance",
-    image: pFood,
+    image: pLEO,
     tasks: [
       "Lên kế hoạch content hàng tháng",
       "Triển khai kế hoạch nội dung",
@@ -219,10 +222,10 @@ export const projects: Project[] = [
     slug: "v-dental",
     title: "NHA KHOA V DENTAL",
     industry: "Y tế · Nha khoa",
-    category: "Content Marketing",
+    category: "FREELANCE - PARTIME",
     role: "Content Marketing",
     period: "Chưa cập nhật",
-    image: [],
+    image: pDental,
     tasks: ["Viết content", "Thiết kế poster"],
     result: "Content & thiết kế poster",
     intro:

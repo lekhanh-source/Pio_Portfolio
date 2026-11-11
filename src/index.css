@@ -116,10 +116,93 @@
   &.in { opacity: 1; transform: none; }
 }
 
+.contact-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid oklch(0.4 0.08 40 / 12%);
+  background: linear-gradient(135deg, oklch(1 0 0 / 82%), var(--background) 78%);
+  box-shadow: 0 28px 80px -48px oklch(0.4 0.08 40 / 32%);
+}
+
+.contact-card::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: radial-gradient(ellipse at 86% 12%, oklch(0.68 0.17 37 / 12%), transparent 42%);
+  content: "";
+  pointer-events: none;
+}
+
+@keyframes project-filter-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filter-results > .filter-item {
+  animation: project-filter-in 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.filter-results > .filter-item:nth-child(2) {
+  animation-delay: 45ms;
+}
+
+.filter-results > .filter-item:nth-child(3) {
+  animation-delay: 90ms;
+}
+
+.filter-results > .filter-item:nth-child(4) {
+  animation-delay: 135ms;
+}
+
+.filter-results > .filter-item:nth-child(5) {
+  animation-delay: 180ms;
+}
+
 @keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-12px) } }
 @utility animate-float { animation: float 6s ease-in-out infinite; }
 @keyframes cursor-blink { 50% { opacity: 0 } }
 @utility animate-cursor-blink { animation: cursor-blink .8s step-end infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  #contact .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  #contact a,
+  #contact a * {
+    transition: none !important;
+  }
+
+  #contact a:hover {
+    transform: none;
+  }
+
+  .filter-results > .filter-item {
+    animation: none;
+  }
+
+  #work button {
+    transition: none !important;
+  }
+
+  #work button:hover,
+  #work button:active {
+    transform: none;
+  }
+}
 
 @layer base {
   * {
