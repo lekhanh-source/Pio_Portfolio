@@ -44,3 +44,7 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
+
+# Large video files
+public/*.mp4
+public/*.MP4
