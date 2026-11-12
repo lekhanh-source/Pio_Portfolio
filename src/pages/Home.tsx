@@ -178,7 +178,7 @@ export default function Home() {
   useReveal();
   const [activeNavSection, setActiveNavSection] = useState("top");
   useEffect(() => {
-    document.title = "Hoàng Thị Hậu — Content Creator & Content Marketing";
+    document.title = "Hoàng Thị Hậu | Content Creator & Content Marketing";
   }, []);
   useEffect(() => {
     const sectionIds = ["about", "services", "work", "contact"];
