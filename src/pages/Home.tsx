@@ -423,10 +423,10 @@ export default function Home() {
             className="glass animate-float absolute inset-x-2 bottom-10 min-w-0 rounded-3xl p-4 sm:p-5 md:inset-x-auto md:-left-24 md:px-8 md:py-7"
           >
             <p className={`${label} text-muted-foreground`}>Họ và Tên</p>
-            <p className="break-words font-display text-2xl font-extrabold text-orange-600 sm:text-3xl">
+            <p className="wrap-break-word-words font-display text-2xl font-extrabold text-orange-600 sm:text-3xl">
               HOÀNG THỊ HẬU
             </p>
-            <p className="mt-2 break-words text-sm text-muted-foreground sm:text-base">
+            <p className="mt-2 wrap-break-word-words text-sm text-muted-foreground sm:text-base">
               Content Creator | Content Marketing | Video Production
             </p>
           </div>

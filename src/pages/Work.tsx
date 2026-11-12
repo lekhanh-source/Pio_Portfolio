@@ -11,7 +11,7 @@ function ResultImageFigure({ image }: { image: ProjectImage }) {
   return (
     <figure>
       {unavailable ? (
-        <div className="flex aspect-[3/4] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed bg-background/50 px-4 text-center text-sm text-muted-foreground">
+        <div className="flex aspect-3/4 flex-col items-center justify-center gap-2 rounded-2xl border border-dashed bg-background/50 px-4 text-center text-sm text-muted-foreground">
           <span>Thêm ảnh vào đường dẫn:</span>
           <code>{image.url}</code>
         </div>
@@ -55,7 +55,7 @@ export default function Work() {
       <Link
         to="/"
         state={{ scrollTo: "work" }}
-        className="fixed left-4 top-4 z-[100] inline-flex items-center rounded-full border border-primary bg-primary px-5 py-3 font-mono text-xs uppercase tracking-[0.25em] text-primary-foreground shadow-xl transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+        className="fixed left-4 top-4 z-100 inline-flex items-center rounded-full border border-primary bg-primary px-5 py-3 font-mono text-xs uppercase tracking-[0.25em] text-primary-foreground shadow-xl transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
       >
         ← Quay lại
       </Link>
@@ -63,7 +63,7 @@ export default function Work() {
         <header className="mt-14 grid items-center gap-8 md:grid-cols-12 lg:gap-12">
           <div className="min-w-0 md:col-span-7">
             <p className={`${label} text-primary`}>{p.category} · {p.industry}</p>
-            <h1 className="mt-6 max-w-full break-words font-display text-4xl font-extrabold leading-[1.05] tracking-[-0.04em] text-orange-500 sm:text-5xl md:text-6xl">{p.title}</h1>
+            <h1 className="mt-6 max-w-full wrap-break-word font-display text-4xl font-extrabold leading-[1.05] tracking-[-0.04em] text-orange-500 sm:text-5xl md:text-6xl">{p.title}</h1>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">{p.intro}</p>
           </div>
           <div className="glass rounded-3xl p-6 md:col-span-5 md:p-7">
@@ -204,7 +204,7 @@ export default function Work() {
                 const isPortraitVideo = v.orientation === "portrait" || v.platform === "Facebook" || v.platform === "TikTok";
                 return (
                   <figure key={v.title} className={`glass rounded-3xl p-3 ${isPortraitVideo ? "mx-auto w-full max-w-sm" : ""}`}>
-                    <div className={`${isPortraitVideo ? "aspect-[9/16]" : "aspect-video"} overflow-hidden rounded-2xl bg-muted`}>
+                    <div className={`${isPortraitVideo ? "aspect-9/16" : "aspect-video"} overflow-hidden rounded-2xl bg-muted`}>
                       {e?.kind === "iframe" && <iframe src={e.src} title={v.title} className="block h-full w-full border-0" loading="eager" scrolling="no" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen />}
                       {e?.kind === "video" && <video src={e.src} controls preload="auto" className="h-full w-full object-contain" />}
                       {!e && <div className="flex h-full items-center justify-center font-mono text-sm text-muted-foreground">▶ Video chưa có liên kết</div>}
@@ -271,7 +271,7 @@ export default function Work() {
           aria-modal="true"
           aria-label={selectedImage.alt ?? selectedImage.title}
           onClick={() => setSelectedImage(null)}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4"
+          className="fixed inset-0 z-100 flex items-center justify-center bg-black/80 p-4"
         >
           <button
             type="button"

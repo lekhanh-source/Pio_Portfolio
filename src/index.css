@@ -1,7 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* stylelint-disable at-rule-no-unknown */
 @custom-variant dark (&:is(.dark *));
+/* stylelint-enable at-rule-no-unknown */
 
 /*
  * Design system definition.

@@ -193,11 +193,11 @@ export default function Freelancer() {
 
   return (
     <main className="relative min-h-screen overflow-x-clip">
-      <div className="pointer-events-none absolute -left-40 top-20 h-[520px] w-[520px] rounded-full bg-primary/20 blur-[120px]" />
+      <div className="pointer-events-none absolute -left-40 top-20 h-520px w-520px rounded-full bg-primary/20 blur-[120px]" />
       <Link
         to="/"
         state={{ scrollTo: "work" }}
-        className={`fixed left-10 top-10 z-[60] inline-flex items-center gap-2 rounded-full border border-primary bg-primary px-5 py-3 text-primary-foreground shadow-xl transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${label}`}
+        className={`fixed left-10 top-10 z-60 inline-flex items-center gap-2 rounded-full border border-primary bg-primary px-5 py-3 text-primary-foreground shadow-xl transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${label}`}
       >
         <span aria-hidden="true">←</span> Quay lại
       </Link>
@@ -442,7 +442,7 @@ export default function Freelancer() {
                       >
                         <div
                           className={`${
-                            isPortrait ? "aspect-[9/16]" : "aspect-video"
+                            isPortrait ? "aspect-9/16" : "aspect-video"
                           } overflow-hidden rounded-2xl bg-muted`}
                         >
                           {embed?.kind === "iframe" && (
@@ -596,7 +596,7 @@ export default function Freelancer() {
                           className={`${
                             video.orientation === "landscape"
                               ? "aspect-video"
-                              : "aspect-[9/16]"
+                              : "aspect-9/16"
                           } overflow-hidden rounded-2xl bg-muted`}
                         >
                           {video.embedUrl ? (
@@ -646,7 +646,7 @@ export default function Freelancer() {
             selectedImage.alt ?? selectedImage.title ?? "Ảnh Pio Đi Đâu Đấy"
           }
           onClick={() => setLightboxIndex(null)}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4"
+          className="fixed inset-0 z-100 flex items-center justify-center bg-black/80 p-4"
         >
           <button
             type="button"
