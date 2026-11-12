@@ -20,7 +20,7 @@ function ResultImageFigure({ image }: { image: ProjectImage }) {
           <img
             src={image.url}
             alt={image.alt ?? image.title}
-            className="block h-auto w-full object-contain"
+            className="block h-auto w-full rounded-2xl object-contain"
             loading="lazy"
             onError={() => setUnavailable(true)}
           />
@@ -48,15 +48,18 @@ export default function Work() {
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [selectedImage]);
   if (!p) return <div className="flex min-h-screen items-center justify-center"><Link to="/" className="underline">Không tìm thấy dự án — về trang chủ</Link></div>;
-  const idx = projects.indexOf(p);
-  const next = projects[(idx + 1) % projects.length] ?? p;
 
   return (
     <div className="relative overflow-x-clip">
       <div className="pointer-events-none absolute -left-40 top-20 h-520px w-520px rounded-full bg-primary/25 blur-[120px]" />
+      <Link
+        to="/"
+        state={{ scrollTo: "work" }}
+        className="fixed left-4 top-4 z-[100] inline-flex items-center rounded-full border border-primary bg-primary px-5 py-3 font-mono text-xs uppercase tracking-[0.25em] text-primary-foreground shadow-xl transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+      >
+        ← Quay lại
+      </Link>
       <div className="mx-auto max-w-6xl px-6 py-10">
-        <Link to="/" className={`glass inline-block rounded-full px-5 py-3 ${label}`}>← Quay lại</Link>
-
         <header className="mt-14 grid items-center gap-8 md:grid-cols-12 lg:gap-12">
           <div className="min-w-0 md:col-span-7">
             <p className={`${label} text-primary`}>{p.category} · {p.industry}</p>
@@ -72,7 +75,15 @@ export default function Work() {
           </div>
         </header>
 
-        <img src={p.image} alt={p.title} width={1024} height={768} className="mt-14 aspect-16/8 w-full rounded-[2rem] object-contain" />
+        <div className="mt-14 flex justify-center w-auto">
+          <img
+            src={p.image}
+            alt={p.title}
+            width={1024}
+            height={768}
+            className="block max-h-[70vh] max-w-full rounded-3xl object-cover shadow-lg shadow-black/25 ring-1 ring-black/5"
+          />
+        </div>
 
         {p.caseStudy && (
           <section className="mt-24">
@@ -131,7 +142,7 @@ export default function Work() {
                           behavior: "smooth",
                         })
                       }
-                      className="grid h-11 w-11 place-items-center rounded-full border bg-white/50 text-lg transition hover:border-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      className="grid h-11 w-11 cursor-pointer place-items-center rounded-full border bg-white/50 text-lg transition hover:border-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     >
                       ←
                     </button>
@@ -245,11 +256,15 @@ export default function Work() {
           </div>
         </section> */}
 
-        <Link to={`/work/${next.slug}`} className="glass mt-24 block rounded-[2rem] p-10 transition hover:-translate-y-1">
-          <p className={`${label} text-muted-foreground`}>Dự án tiếp theo</p>
-          <p className="mt-2 font-display text-4xl font-extrabold md:text-6xl">{next.title} →</p>
-        </Link>
       </div>
+      <footer className="mx-auto mt-8 flex max-w-6xl flex-col items-center gap-2 px-6 pb-10 text-center sm:mt-10">
+        <p className="font-mono text-xs text-muted-foreground">
+          © 2026 Hoàng Thị Hậu
+        </p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/75">
+          Designed &amp; developed with passion.
+        </p>
+      </footer>
       {selectedImage && (
         <div
           role="dialog"

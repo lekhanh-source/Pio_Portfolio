@@ -3,7 +3,7 @@ import pFood from "../assets/p-food.jpg";
 import pHT from "../assets/p-hangthu.jpg";
 import pKOC from "../assets/p-KOC.jpg";
 import pLEO from "../assets/p-LEO.jpg";
-import pDental from "../assets/p-dental.avif";
+import pPage from "../assets/pio_page.jpg";
 
 export type Video = {
   title: string;
@@ -46,6 +46,29 @@ export type Project = {
 // Add new projects here — the gallery and detail pages render from this array.
 export const projects: Project[] = [
   // project 1
+  
+  {
+    slug: "Freelancer",
+    title: "FREELANCE - PARTIME",
+    industry: "F&B",
+    category: "FREELANCE - PARTIME",
+    role: "Content Marketing",
+    period: "--",
+    image: pPage,
+    tasks: [
+      "Admin kênh: Pio Đi Đâu Đấy",
+      "Content Marketing - Nha Khoa V Dental",
+      "Content Marketing - Xưởng cà phê LEO Arabica",
+      "Event Runner - Hộ Kinh Doanh Mai Thanh Hùng",
+      "Video editor, VJ",
+    ],
+    result: "Content Marketing & thiết kế poster",
+    intro:
+      "Phụ trách Content Marketing cho Xưởng cà phê LEO Arabica: lên kế hoạch nội dung hàng tháng, triển khai kế hoạch và thiết kế poster.",
+    videos: [],
+  },
+
+  // project 2
   {
     slug: "uyen-uyen-mart",
     title: "Uyên Uyên Mart",
@@ -70,9 +93,7 @@ export const projects: Project[] = [
     result: "~1.900% tăng trưởng fanpage",
     intro:
       "Uyên Uyên Mart là hệ thống siêu thị FMCG tại Nha Trang, cung cấp đa dạng sản phẩm tiêu dùng thiết yếu cho gia đình. Thương hiệu hướng đến hình ảnh gần gũi, tiện lợi, giá tốt và phù hợp với nhu cầu mua sắm hằng ngày của khách hàng địa phương.",
-    resultImages: [
-      { title: "", url: "/images/UUM_kq.jpg" },
-    ],
+    resultImages: [{ title: "", url: "/images/UUM_kq.jpg" }],
     images: [
       {
         title: "",
@@ -137,37 +158,16 @@ export const projects: Project[] = [
     ],
   },
 
-  // project 2
-  {
-    slug: "freelance-video",
-    title: "HẰNG THU MEDIA",
-    industry: "Agency · Truyền thông",
-    category: "Content Marketing",
-    role: "Content · Host Livestream",
-    period: "Freelance",
-    image: pHT,
-    tasks: [
-      "Lên kế hoạch nội dung hàng tháng",
-      "Triển khai kế hoạch nội dung",
-      "Viết kịch bản short video",
-      "Livestream",
-      "Lên kịch bản mega live",
-    ],
-    result: "Content · Short video · Mega live",
-    intro:
-      "Tại CT TNHH Hằng Thu Media, đảm nhận hai vai trò Content và Host Livestream: lên kế hoạch nội dung hàng tháng, triển khai kế hoạch, viết kịch bản short video, dẫn livestream và xây dựng kịch bản mega live.",
-    images: [{ title: "", url: "" }],
-    videos: [],
-  },
 
   //project 3
+
   {
     slug: "food-review",
     title: "ALIBABA MEDIA",
     industry: "Truyền thông · F&B",
     category: "Content CREATOR",
     role: "Content Creator - Food Review",
-    period: "Freelance",
+    period: "--",
     image: pFood,
     tasks: [
       "Lên plan nội dung hàng tháng",
@@ -177,10 +177,16 @@ export const projects: Project[] = [
       "Nhận job booking từ khách hàng",
       "Admin Page Lang Thang Nha Trang",
     ],
-    result: "Short-form storytelling",
+    result: "~ 6 video trên 100k views",
     intro:
       "CT TNHH Truyền Thông Sự kiện ALIBABA MEDIA — đảm nhận vị trí Content Creator - Food Review, phụ trách lên kế hoạch nội dung hàng tháng, sản xuất video review ẩm thực và quản trị Page Lang Thang Nha Trang.",
-    images: [],
+    images: [
+      { title: "", url: "/images/nha trang 1.png" },
+      { title: "", url: "/images/nha trang 2.png" },
+      { title: "", url: "/images/LTanh1.png" },
+      { title: "", url: "/images/LTanh2.png" },
+      { title: "", url: "/images/LTanh3.png" },
+    ],
     videos: [
       {
         title: "Chả Cốm Lạc Thiện",
@@ -202,7 +208,42 @@ export const projects: Project[] = [
   },
 
   // project 4
+    
   {
+    slug: "freelance-video",
+    title: "HẰNG THU MEDIA",
+    industry: "Agency · Truyền thông",
+    category: "Content Marketing",
+    role: "Content · Host Livestream",
+    period: "--",
+    image: pHT,
+    tasks: [
+      "Lên kế hoạch nội dung hàng tháng",
+      "Triển khai kế hoạch nội dung",
+      "Viết kịch bản short video",
+      "Livestream",
+      "Lên kịch bản mega live",
+    ],
+    result: "--",
+    intro:
+      "Tại CT TNHH Hằng Thu Media, đảm nhận hai vai trò Content và Host Livestream: lên kế hoạch nội dung hàng tháng, triển khai kế hoạch, viết kịch bản short video, dẫn livestream và xây dựng kịch bản mega live.",
+    images: [
+      { title: "", url: "/images/HT 1.png" },
+      { title: "", url: "/images/HT2.png" },
+    ],
+    videos: [
+      {
+        title: "Livestream bán hàng",
+        platform: "Facebook",
+        url: "/megalive.MP4",
+        thumbnail: "/thumbnailht.png",
+      },
+    ],
+  },
+ 
+
+  // project 5
+ {
     slug: "again-group",
     title: "AGAIN GROUP",
     industry: "Giáo dục · Đào tạo",
@@ -219,63 +260,10 @@ export const projects: Project[] = [
     result: "Hỗ trợ đào tạo và vận hành",
     intro:
       "Đảm nhận vai trò Thư ký - Trợ lý tại CT CPĐT AGAIN GROUP, phụ trách tổ chức các buổi đào tạo thành viên, viết nội dung, thiết kế poster và trao đổi với đối tác, học viên.",
-    videos: [],
-  },
-
-  // project 5
-  {
-    slug: "Freelance",
-    title: "Xưởng cà phê Leo Arabica",
-    industry: "F&B",
-    category: "FREELANCE - PARTIME",
-    role: "Content Marketing",
-    period: "Freelance",
-    image: pLEO,
-    tasks: [
-      "Lên kế hoạch content hàng tháng",
-      "Thiết kế poster",
-      "Triển khai kế hoạch nội dung",
+    images: [
+      { title: "", url: "/images/koc .png" },
+      { title: "", url: "/images/koc 1 .png" },
     ],
-    result: "Content Marketing & thiết kế poster",
-    intro:
-      "Phụ trách Content Marketing cho Xưởng cà phê LEO Arabica: lên kế hoạch nội dung hàng tháng, triển khai kế hoạch và thiết kế poster.",
-    videos: [],
-  },
-
-  // project 6
-  {
-    slug: "Freelance",
-    title: "NHA KHOA V DENTAL",
-    industry: "Y tế · Nha khoa",
-    category: "FREELANCE - PARTIME",
-    role: "Content Marketing",
-    period: "Chưa cập nhật",
-    image: pDental,
-    tasks: ["Viết content", "Thiết kế poster"],
-    result: "Content & thiết kế poster",
-    intro:
-      "Phụ trách Content Marketing cho Nha khoa V Dental, thực hiện viết nội dung và thiết kế poster.",
-    videos: [],
-  },
-  //project 7
-   {
-    slug: "Freelancer",
-    title: "FREELANCE - PARTIME",
-    industry: "F&B",
-    category: "FREELANCE - PARTIME",
-    role: "Content Marketing",
-    period: "Freelance",
-    image: pLEO,
-    tasks: [
-      "Admin kênh: Pio Đi Đâu Đấy",
-      "Content Marketing - Nha Khoa V Dental",
-      "Content Marketing - Xưởng cà phê LEO Arabica",
-      "Event Runner - Hộ Kinh Doanh Mai Thanh Hùng",
-      "Video editor, VJ",
-    ],
-    result: "Content Marketing & thiết kế poster",
-    intro:
-      "Phụ trách Content Marketing cho Xưởng cà phê LEO Arabica: lên kế hoạch nội dung hàng tháng, triển khai kế hoạch và thiết kế poster.",
     videos: [],
   },
   {
@@ -285,15 +273,15 @@ export const projects: Project[] = [
     category: "FREELANCE - PARTIME",
     role: "Content Marketing",
     period: "Chưa cập nhật",
-    image: pDental,
+    image: pPage,
     tasks: ["Viết content", "Thiết kế poster"],
     result: "Content & thiết kế poster",
     intro:
       "Phụ trách Content Marketing cho Nha khoa V Dental, thực hiện viết nội dung và thiết kế poster.",
-      images: [
-        { title: "", url: "/images/pio_page.jpg" },
-        { title: "", url: "/images/pio_di_dau.jpg" },
-      ],
+    images: [
+      { title: "", url: "/images/pio_page.jpg" },
+      { title: "", url: "/images/pio_di_dau.jpg" },
+    ],
     videos: [
       {
         title: "Chợ đêm Nha Trang",
@@ -304,13 +292,38 @@ export const projects: Project[] = [
         stats: { views: "34,76K", likes: "471" },
       },
       {
-        title: "Mukbang mì khổng lồ",
+        title: "Ăn thử bánh mì chảo",
+        platform: "TikTok",
+        orientation: "portrait",
+        sourceFile: "/pio_video3.mp4",
+        url: "https://www.tiktok.com/@pio.didau/video/7676799713827392788?is_from_webapp=1&sender_device=pc",
+        stats: { views: "120,434", likes: "2,773" },
+      },
+      {
+        title: "Mukbang Bún Mắm",
+        platform: "TikTok",
+        orientation: "portrait",
+        sourceFile: "/pio_video4.mp4",
+        url: "https://www.tiktok.com/@pio.didau/video/7673461874955996437?is_from_webapp=1&sender_device=pc",
+        stats: { views: "195,007", likes: "4,520" },
+      },  
+      {
+        title: "Nha Trang ăn gì",
+        platform: "TikTok",
+        orientation: "portrait",
+        sourceFile: "/pio_video5.mp4",
+        url: "https://www.tiktok.com/@pio.didau/video/7693721573341072660?is_from_webapp=1&sender_device=pc",
+        stats: { views: "93,969", likes: "2,135" },
+      },
+      {
+        title: "Cơm cháy Aloha",
         platform: "TikTok",
         orientation: "portrait",
         sourceFile: "/pio_video2.mp4",
-        url: "https://www.tiktok.com/@pio.didau/video/7696375624700661012?is_from_webapp=1&sender_device=pc",
-        stats: { views: "4,993", likes: "85" },
+        url: "https://www.tiktok.com/@pio.didau/video/7703917185462177076?is_from_webapp=1&sender_device=pc",
+        stats: { views: "42,795", likes: "1,094" },
       },
+
     ],
   },
 ];

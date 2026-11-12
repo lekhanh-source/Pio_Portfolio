@@ -6,12 +6,33 @@ import { projects } from "../lib/projects";
 
 const services = [
   {
+    title: "FREELANCE - PARTTIME",
+    items: [
+      "(08/2026 - nay)",
+      "Content Marketing - Nha Khoa V Dental",
+      "Content Marketing - Xưởng cà phê LEO Arabica",
+      "Event Runner - Hộ Kinh Doanh Mai Thanh Hùng",
+      "Video editor, VJ",
+    ],
+    bulleted: true,
+  },
+  {
     title: "Content MARKETING",
     items: [
-      "(08/2025 - 06/2026)",
+      "(06/2025 - 07/2026)",
       "Lĩnh vực: FMCG",
       "Công ty TNHH & DV Thế Giới Gia Dụng Uyên Uyên",
       "Vị trí: Content Marketing (content plan, plan event, kịch bản short video, edit video, design, MC nội bộ, VJ, chạy ads cơ bản)",
+    ],
+    bulleted: true,
+  },
+    {
+    title: "Content CREATOR",
+    items: [
+      "(02/2025 - 10/2025)",
+      "Lĩnh vực: F&B",
+      "Công ty TNHH Truyền Thông Sự Kiện Alibaba Media",
+      "Vị trí: Content Creator (plan content, reviewer các quán ăn, quay - dựng short video)",
     ],
     bulleted: true,
   },
@@ -25,36 +46,18 @@ const services = [
     ],
     bulleted: true,
   },
-  {
-    title: "Content CREATOR",
-    items: [
-      "(03/2025 - 07/2025)",
-      "Lĩnh vực: F&B",
-      "Công ty TNHH Truyền Thông Sự Kiện Alibaba Media",
-      "Vị trí: Content Creator (plan content, reviewer các quán ăn, quay - dựng short video)",
-    ],
-    bulleted: true,
-  },
+
   {
     title: "TRỢ LÝ KOC KHÁNH HOÀ - PARTTIME",
     items: [
-      "(05/2024 - 09/2024)",
+      "(05/2024 - 10/2024)",
       "Lĩnh vực: Giáo dục - Đào tạo",
       "CT CPĐT AGAIN GROUP",
       "Vị trí: Thư ký - Trợ lý 9KOC - Hỗ trợ đào tạo",
     ],
     bulleted: true,
   },
-  {
-    title: "FREELANCE - PARTTIME",
-    items: [
-      "Content Marketing - Nha Khoa V Dental",
-      "Content Marketing - Xưởng cà phê LEO Arabica",
-      "Event Runner - Hộ Kinh Doanh Mai Thanh Hùng",
-      "Video editor, VJ",
-    ],
-    bulleted: true,
-  },
+  
 ];
 
 const headingParts = { start: "Port", emphasis: "folio", end: "" };
@@ -255,7 +258,7 @@ export default function Home() {
             }}
             className="font-display text-lg font-extrabold tracking-tight"
           >
-            HẬU<span className="text-primary"> HOÀNG</span>
+            <span className="text-orange-600">HẬU HOÀNG</span>
           </a>
           <div className={`hidden gap-8 md:flex ${label}`}>
             <a
@@ -321,7 +324,7 @@ export default function Home() {
             aria-current={activeNavSection === "contact" ? "location" : undefined}
             className={`rounded-full bg-foreground px-4 py-2 text-background ${label} text-[10px] ${
               activeNavSection === "contact"
-                ? "text-primary underline decoration-2 underline-offset-4"
+                ? "text-white underline decoration-2 underline-offset-4"
                 : ""
             }`}
           >
@@ -479,7 +482,7 @@ export default function Home() {
             </p>
             <p className="text-muted-foreground">
               <span className="font-semibold text-foreground">Mục tiêu:</span>{" "}
-              Trở thành <span className="text-primary italic font-bold">Marketing Leader</span> có khả năng dẫn dắt đội nhóm, xây dựng
+              Trong <span className="text-primary italic font-bold">2 năm tới </span> trở thành <span className="text-primary italic font-bold">Marketing Leader</span> có khả năng dẫn dắt đội nhóm, xây dựng
               chiến lược và tạo ra giá trị thực tế cho thương hiệu.
             </p>
             <div className="flex flex-wrap gap-2">
@@ -635,22 +638,27 @@ export default function Home() {
       {/* CONTACT */}
       <section id="contact" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 md:py-28">
         <div className="contact-card reveal rounded-[2rem] p-6 sm:rounded-[2.5rem] sm:p-8 md:p-12 lg:p-16">
-          <div className="relative z-10">
-            <p className={`${label} reveal text-primary`}>05 — Contact</p>
-            <h2 className="reveal mt-4 max-w-5xl font-display text-4xl font-extrabold leading-[0.98] tracking-[-0.045em] text-balance sm:text-5xl md:text-7xl lg:text-8xl">
-              Let's create
-              <br />
-              something <span className="italic text-primary">real.</span>
+          <div className="contact-layout relative z-10">
+            <h2 className="contact-thanks reveal" aria-label="Thank you">
+              <span>Thank</span>
+              <span>You</span>
             </h2>
-            <p className="reveal mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
-              Open to creative collaborations, new opportunities, and
-              interesting conversations.
-            </p>
-            <div className="reveal mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4">
+            <div className="contact-message">
+              <p className="reveal">
+                “Cảm ơn anh/chị đã dành thời gian đọc đến những dòng cuối cùng
+                trong Portfolio này.”
+              </p>
+              <p className="reveal">
+                Mọi góp ý, dù nhỏ nhất, đều là điều quý giá để tôi tiếp tục học
+                hỏi và hoàn thiện bản thân. Rất mong nhận được phản hồi từ
+                anh/chị!
+              </p>
+            </div>
+            <div className="contact-actions reveal">
             <a
               href="mailto:hthau223@gmail.com"
               aria-label="Email Hoàng Thị Hậu"
-              className={`group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-primary px-7 py-4 text-primary-foreground shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:brightness-105 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:w-auto ${label}`}
+              className={`contact-action group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-primary px-7 py-4 text-primary-foreground shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:brightness-105 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:w-auto ${label}`}
             >
               Email me
               <span
@@ -665,7 +673,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit Hoàng Thị Hậu on Facebook (opens in a new tab)"
-              className={`group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full border border-foreground/15 bg-white/25 px-7 py-4 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/35 hover:bg-primary/10 hover:text-primary hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:w-auto ${label}`}
+              className={`contact-action group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full border border-foreground/15 bg-white/25 px-7 py-4 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/35 hover:bg-primary/10 hover:text-primary hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:w-auto ${label}`}
             >
               Facebook
               <span
@@ -680,7 +688,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit Hoàng Thị Hậu on TikTok (opens in a new tab)"
-              className={`group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full border border-foreground/15 bg-white/25 px-7 py-4 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/35 hover:bg-primary/10 hover:text-primary hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:w-auto ${label}`}
+              className={`contact-action group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full border border-foreground/15 bg-white/25 px-7 py-4 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/35 hover:bg-primary/10 hover:text-primary hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:w-auto ${label}`}
             >
               TikTok
               <span
@@ -696,9 +704,6 @@ export default function Home() {
         <footer className="mt-8 flex flex-col items-center gap-2 text-center sm:mt-10">
           <p className="font-mono text-xs text-muted-foreground">
             © 2026 Hoàng Thị Hậu
-          </p>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/75">
-            Designed &amp; developed with passion.
           </p>
         </footer>
       </section>

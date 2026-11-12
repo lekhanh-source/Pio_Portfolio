@@ -1,12 +1,20 @@
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+  type PointerEvent,
+  type ReactNode,
+} from "react";
 import { Link } from "react-router-dom";
 import { embedUrl, projects, type ProjectImage } from "../lib/projects";
+import {
+  otherProjectImages,
+  otherProjectVideos,
+} from "../lib/otherProjectMedia";
 
 const label = "font-mono text-xs uppercase tracking-[0.25em]";
 const pioProject = projects.find((project) => project.slug === "Pio");
-const freelanceProjects = projects.filter(
-  (project) => project.slug === "Freelance",
-);
 
 const channelHighlights = [
   "Định hướng kênh chia sẻ về ẩm thực, địa điểm vui chơi và trải nghiệm tại Nha Trang.",
@@ -20,9 +28,150 @@ function glow(e: MouseEvent<HTMLElement>) {
   e.currentTarget.style.setProperty("--my", `${e.clientY - rect.top}px`);
 }
 
+function MediaCarousel({
+  label,
+  hasItems,
+  children,
+}: {
+  label: string;
+  hasItems: boolean;
+  children: ReactNode;
+}) {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef<{
+    pointerId: number;
+    startX: number;
+    startScrollLeft: number;
+    moved: boolean;
+    captured: boolean;
+  } | null>(null);
+  const draggedRef = useRef(false);
+
+  const scroll = (direction: -1 | 1) => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+    carousel.scrollBy({
+      left: direction * carousel.clientWidth * 0.8,
+      behavior: "smooth",
+    });
+  };
+
+  const startDrag = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse" || event.button !== 0) return;
+    if (
+      event.target instanceof Element &&
+      event.target.closest("video, iframe")
+    ) {
+      return;
+    }
+
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startScrollLeft: event.currentTarget.scrollLeft,
+      moved: false,
+      captured: false,
+    };
+  };
+
+  const moveDrag = (event: PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    const distance = event.clientX - drag.startX;
+    if (Math.abs(distance) > 4) {
+      drag.moved = true;
+      if (!drag.captured) {
+        event.currentTarget.setPointerCapture(event.pointerId);
+        drag.captured = true;
+      }
+    }
+    if (drag.moved) {
+      event.preventDefault();
+      event.currentTarget.scrollLeft = drag.startScrollLeft - distance;
+    }
+  };
+
+  const endDrag = (event: PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    draggedRef.current = drag.moved;
+    dragRef.current = null;
+    if (
+      drag.captured &&
+      event.currentTarget.hasPointerCapture(event.pointerId)
+    ) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    if (draggedRef.current) {
+      window.setTimeout(() => {
+        draggedRef.current = false;
+      }, 0);
+    }
+  };
+
+  return (
+    <div className="mt-4 min-w-0 overflow-hidden">
+      <div className="mb-4 flex justify-end gap-2">
+        <button
+          type="button"
+          aria-label={`Xem ${label} trước`}
+          onClick={() => scroll(-1)}
+          disabled={!hasItems}
+          className="grid h-10 cursor-pointer w-10 place-items-center rounded-full border bg-white/50 text-lg transition hover:border-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
+          ←
+        </button>
+        <button
+          type="button"
+          aria-label={`Xem ${label} tiếp theo`}
+          onClick={() => scroll(1)}
+          disabled={!hasItems}
+          className="grid h-10 cursor-pointer w-10 place-items-center rounded-full border bg-white/50 text-lg transition hover:border-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
+          →
+        </button>
+      </div>
+      <div
+        ref={carouselRef}
+        className="image-carousel media-carousel flex cursor-grab snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden pb-4 active:cursor-grabbing"
+        aria-label={label}
+        onPointerDown={startDrag}
+        onPointerMove={moveDrag}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onClickCapture={(event) => {
+          if (!draggedRef.current) return;
+          event.preventDefault();
+          event.stopPropagation();
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export default function Freelancer() {
   const imageCarouselRef = useRef<HTMLDivElement>(null);
-  const [selectedImage, setSelectedImage] = useState<ProjectImage | null>(null);
+  const [lightboxImages, setLightboxImages] = useState<ProjectImage[]>([]);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const selectedImage =
+    lightboxIndex === null ? null : lightboxImages[lightboxIndex] ?? null;
+
+  const openLightbox = (images: ProjectImage[], index: number) => {
+    setLightboxImages(images);
+    setLightboxIndex(index);
+  };
+
+  const moveLightbox = (direction: -1 | 1) => {
+    setLightboxIndex((index) => {
+      if (index === null || lightboxImages.length < 2) return index;
+      return (
+        (index + direction + lightboxImages.length) % lightboxImages.length
+      );
+    });
+  };
 
   useEffect(() => {
     document.title = "Freelancer — Hoàng Thị Hậu";
@@ -32,17 +181,26 @@ export default function Freelancer() {
   useEffect(() => {
     if (!selectedImage) return;
 
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelectedImage(null);
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setLightboxIndex(null);
+      if (event.key === "ArrowLeft") moveLightbox(-1);
+      if (event.key === "ArrowRight") moveLightbox(1);
     };
 
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
-  }, [selectedImage]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedImage, lightboxImages.length]);
 
   return (
     <main className="relative min-h-screen overflow-x-clip">
       <div className="pointer-events-none absolute -left-40 top-20 h-[520px] w-[520px] rounded-full bg-primary/20 blur-[120px]" />
+      <Link
+        to="/"
+        state={{ scrollTo: "work" }}
+        className={`fixed left-10 top-10 z-[60] inline-flex items-center gap-2 rounded-full border border-primary bg-primary px-5 py-3 text-primary-foreground shadow-xl transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${label}`}
+      >
+        <span aria-hidden="true">←</span> Quay lại
+      </Link>
       <header className="fixed inset-x-0 top-4 z-50 flex justify-center px-4">
         <nav
           onMouseMove={glow}
@@ -53,7 +211,7 @@ export default function Freelancer() {
             state={{ scrollTo: "top" }}
             className="font-display text-lg font-extrabold tracking-tight"
           >
-            HẬU<span className="text-primary"> HOÀNG</span>
+            <span className="text-primary">HẬU HOÀNG</span>
           </Link>
           <div className={`hidden gap-8 md:flex ${label}`}>
             <Link
@@ -195,7 +353,7 @@ export default function Freelancer() {
                           behavior: "smooth",
                         })
                       }
-                      className="grid h-11 w-11 place-items-center rounded-full border bg-white/50 text-lg transition hover:border-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      className="grid h-11 cursor-pointer w-11 place-items-center rounded-full border bg-white/50 text-lg transition hover:border-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     >
                       ←
                     </button>
@@ -208,24 +366,26 @@ export default function Freelancer() {
                           behavior: "smooth",
                         })
                       }
-                      className="grid h-11 w-11 place-items-center rounded-full border bg-white/50 text-lg transition hover:border-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      className="grid h-11 cursor-pointer w-11 place-items-center rounded-full border bg-white/50 text-lg transition hover:border-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     >
                       →
                     </button>
                   </div>
                   <div
                     ref={imageCarouselRef}
-                    className="image-carousel flex snap-x snap-mandatory gap-3 overflow-x-hidden overflow-y-hidden pb-4"
+                    className="image-carousel media-carousel flex snap-x snap-mandatory gap-3 overflow-x-auto overflow-y-hidden pb-4"
                     aria-label="Carousel hình ảnh Pio Đi Đâu Đấy"
                   >
-                    {pioProject?.images?.map((image) => (
+                    {pioProject?.images?.map((image, imageIndex) => (
                       <figure
                         key={image.url}
                         className="w-[85%] shrink-0 snap-start sm:w-[55%] lg:w-[32%]"
                       >
                         <button
                           type="button"
-                          onClick={() => setSelectedImage(image)}
+                          onClick={() =>
+                            openLightbox(pioProject?.images ?? [], imageIndex)
+                          }
                           aria-label={`Mở ảnh kích thước đầy đủ: ${image.alt ?? image.title ?? "Pio Đi Đâu Đấy"}`}
                           className="glass block w-full cursor-zoom-in overflow-hidden rounded-3xl p-3 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                         >
@@ -261,7 +421,10 @@ export default function Freelancer() {
                 Video
               </h2>
               {(pioProject?.videos.length ?? 0) > 0 ? (
-                <div className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                <MediaCarousel
+                  label="video Pio Đi Đâu Đấy"
+                  hasItems={(pioProject?.videos.length ?? 0) > 0}
+                >
                   {pioProject?.videos.map((video) => {
                     const source = video.sourceFile ?? video.url;
                     const embed = source ? embedUrl(source) : null;
@@ -273,8 +436,8 @@ export default function Freelancer() {
                     return (
                       <figure
                         key={video.title}
-                        className={`glass rounded-3xl p-3 ${
-                          isPortrait ? "mx-auto w-full max-w-sm" : ""
+                        className={`glass w-[85%] shrink-0 snap-start rounded-3xl p-3 sm:w-[55%] lg:w-[32%] ${
+                          isPortrait ? "max-w-sm" : ""
                         }`}
                       >
                         <div
@@ -338,7 +501,7 @@ export default function Freelancer() {
                       </figure>
                     );
                   })}
-                </div>
+                </MediaCarousel>
               ) : (
                 <p className="mt-4 rounded-2xl border border-dashed p-5 text-sm text-muted-foreground">
                   Chưa có video. Thêm dữ liệu vào `videos` của project
@@ -362,54 +525,116 @@ export default function Freelancer() {
             Các dự án khác
           </h2>
 
-          <div className="mt-10 space-y-8 md:mt-14 md:space-y-12">
-            {freelanceProjects.map((project, index) => (
-              <article
-                key={project.slug}
-                className="grid items-center gap-6 md:grid-cols-12 md:gap-10"
+          <div className="mt-8 space-y-10 md:mt-12 md:space-y-14">
+            <section aria-labelledby="other-project-images-title">
+              <h3
+                id="other-project-images-title"
+                className="font-display text-2xl font-extrabold"
               >
-                <div
-                  className={`group relative block overflow-hidden rounded-[2rem] md:col-span-6 ${
-                    index % 2 ? "md:order-2" : ""
-                  }`}
-                  aria-label={`Xem dự án ${project.title}`}
-                >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    className="aspect-[4/3] w-full object-fit transition duration-700 group-hover:scale-105"
-                  />
-                </div>
+                Hình ảnh
+              </h3>
+              <MediaCarousel
+                label="ảnh các dự án khác"
+                hasItems={otherProjectImages.length > 0}
+              >
+                {otherProjectImages.length ? (
+                  otherProjectImages.map((image, imageIndex) => (
+                    <figure
+                      key={image.url}
+                      className="w-[85%] shrink-0 snap-start sm:w-[55%] lg:w-[32%]"
+                    >
+                      <button
+                        type="button"
+                        onClick={() =>
+                          openLightbox(otherProjectImages, imageIndex)
+                        }
+                        aria-label={`Mở ảnh: ${image.title}`}
+                        className="glass block w-full cursor-zoom-in overflow-hidden rounded-3xl p-3 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                      >
+                        <img
+                          src={image.url}
+                          alt={image.alt ?? image.title}
+                          loading="lazy"
+                          className="h-64 w-full rounded-2xl object-contain sm:h-72"
+                        />
+                      </button>
+                      <figcaption className="pt-3 text-center text-sm font-semibold">
+                        {image.title}
+                      </figcaption>
+                    </figure>
+                  ))
+                ) : (
+                  <p className="flex min-h-40 w-full shrink-0 items-center justify-center rounded-3xl border border-dashed text-sm text-muted-foreground">
+                    Thêm hình và tiêu đề vào `otherProjectImages` trong
+                    `otherProjectMedia.ts`.
+                  </p>
+                )}
+              </MediaCarousel>
+            </section>
 
-                <div
-                  className={`glass rounded-3xl p-6 sm:p-8 md:col-span-6 ${
-                    index % 2 ? "md:order-1" : ""
-                  }`}
-                >
-                  <p className={`${label} text-muted-foreground`}>
-                    {String(index + 1).padStart(2, "0")} · {project.industry}
+            <section aria-labelledby="other-project-videos-title">
+              <h3
+                id="other-project-videos-title"
+                className="font-display text-2xl font-extrabold"
+              >
+                Video
+              </h3>
+              <MediaCarousel
+                label="video các dự án khác"
+                hasItems={otherProjectVideos.length > 0}
+              >
+                {otherProjectVideos.length ? (
+                  otherProjectVideos.map((video) => (
+                    <figure
+                      key={video.url}
+                      className={`w-[85%] shrink-0 snap-start sm:w-[55%] lg:w-[32%] ${
+                        video.orientation !== "landscape" ? "max-w-sm" : ""
+                      }`}
+                    >
+                      <div className="glass rounded-3xl p-3">
+                        <div
+                          className={`${
+                            video.orientation === "landscape"
+                              ? "aspect-video"
+                              : "aspect-[9/16]"
+                          } overflow-hidden rounded-2xl bg-muted`}
+                        >
+                          {video.embedUrl ? (
+                            <iframe
+                              src={video.embedUrl}
+                              title={video.title}
+                              className="h-full w-full border-0"
+                              loading="lazy"
+                              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                              allowFullScreen
+                            />
+                          ) : (
+                            <video
+                              src={video.url}
+                              poster={video.thumbnail}
+                              controls
+                              preload="metadata"
+                              className="h-full w-full object-contain"
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <figcaption className="px-3 pt-3 text-center">
+                        <p className="font-semibold">{video.title}</p>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          {video.subtitle}
+                        </p>
+                      </figcaption>
+                    </figure>
+                  ))
+                ) : (
+                  <p className="flex min-h-40 w-full shrink-0 items-center justify-center rounded-3xl border border-dashed text-sm text-muted-foreground">
+                    Thêm video, tiêu đề và phụ đề vào `otherProjectVideos` trong
+                    `otherProjectMedia.ts`.
                   </p>
-                  <h3 className="mt-3 font-display text-3xl font-extrabold sm:text-4xl">
-                    {project.title}
-                  </h3>
-                  <p className="mt-2 text-sm font-semibold text-primary">
-                    {project.role}
-                  </p>
-                  <p className="mt-4 leading-relaxed text-muted-foreground">
-                    {project.intro}
-                  </p>
-                  <ul className="mt-5 grid gap-x-4 gap-y-2 text-sm text-muted-foreground sm:grid-cols-2">
-                    {project.tasks.map((task) => (
-                      <li key={task}>— {task}</li>
-                    ))}
-                  </ul>
-                  <p className="mt-6 border-t pt-4 font-mono text-base font-bold sm:text-lg">
-                    {project.result}
-                  </p>
-                </div>
-              </article>
-            ))}
+                )}
+              </MediaCarousel>
+            </section>
           </div>
         </section>
       </div>
@@ -420,23 +645,49 @@ export default function Freelancer() {
           aria-label={
             selectedImage.alt ?? selectedImage.title ?? "Ảnh Pio Đi Đâu Đấy"
           }
-          onClick={() => setSelectedImage(null)}
+          onClick={() => setLightboxIndex(null)}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4"
         >
           <button
             type="button"
             autoFocus
-            onClick={() => setSelectedImage(null)}
+            onClick={() => setLightboxIndex(null)}
             aria-label="Đóng ảnh"
             className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white/15 text-3xl text-white transition hover:bg-white/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             ×
           </button>
+          {lightboxImages.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  moveLightbox(-1);
+                }}
+                aria-label="Xem ảnh trước"
+                className="absolute left-4 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-white/15 text-3xl text-white transition hover:bg-white/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:left-8"
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  moveLightbox(1);
+                }}
+                aria-label="Xem ảnh tiếp theo"
+                className="absolute right-4 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-white/15 text-3xl text-white transition hover:bg-white/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:right-8"
+              >
+                ›
+              </button>
+            </>
+          )}
           <img
             src={selectedImage.url}
             alt={selectedImage.alt ?? selectedImage.title ?? "Pio Đi Đâu Đấy"}
             onClick={(event) => event.stopPropagation()}
-            className="max-h-[90vh] max-w-[92vw] rounded-xl object-contain shadow-2xl"
+            className="max-h-[90vh] max-w-[min(92vw,72rem)] rounded-xl object-contain shadow-2xl"
           />
         </div>
       )}
