@@ -407,6 +407,21 @@
   .image-carousel {
     scroll-behavior: auto;
   }
+}
+
+.mobile-nav-shell {
+  overflow: visible;
+}
+
+.mobile-nav-panel {
+  position: absolute;
+  z-index: 1;
+  background: var(--background);
+}
+
+.mobile-nav-panel > * {
+  position: relative;
+  z-index: 1;
 
   .liquid-glass-button:hover {
     transform: none;

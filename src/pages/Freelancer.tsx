@@ -201,51 +201,6 @@ export default function Freelancer() {
       >
         <span aria-hidden="true">←</span> Quay lại
       </Link>
-      <header className="fixed inset-x-0 top-4 z-50 flex justify-center px-4">
-        <nav
-          onMouseMove={glow}
-          className="glass flex w-full max-w-5xl items-center justify-between rounded-full px-6 py-3"
-        >
-          <Link
-            to="/"
-            state={{ scrollTo: "top" }}
-            className="font-display text-lg font-extrabold tracking-tight"
-          >
-            <span className="text-primary">HẬU HOÀNG</span>
-          </Link>
-          <div className={`hidden gap-8 md:flex ${label}`}>
-            <Link
-              to="/"
-              state={{ scrollTo: "about" }}
-              className="hover:text-primary"
-            >
-              About
-            </Link>
-            <Link
-              to="/"
-              state={{ scrollTo: "services" }}
-              aria-current="page"
-              className="text-primary underline decoration-2 underline-offset-8"
-            >
-              project
-            </Link>
-            <Link
-              to="/"
-              state={{ scrollTo: "contact" }}
-              className="hover:text-primary"
-            >
-              Contact
-            </Link>
-          </div>
-          <Link
-            to="/"
-            state={{ scrollTo: "contact" }}
-            className={`rounded-full bg-foreground px-4 py-2 text-background ${label} text-[10px]`}
-          >
-            Hire me
-          </Link>
-        </nav>
-      </header>
 
       <div className="relative mx-auto max-w-7xl px-5 pb-8 pt-28 sm:px-8 md:pb-12">
         <header id="top" className="mt-12 scroll-mt-28">
@@ -286,15 +241,26 @@ export default function Freelancer() {
                     </li>
                   ))}
                 </ul>
-                <a
-                  href="https://www.tiktok.com/@pio.didau"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Xem kênh Pio Đi Đâu Đấy trên TikTok (mở tab mới)"
-                  className={`mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-primary-foreground shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${label}`}
-                >
-                  Xem kênh TikTok <span aria-hidden="true">↗</span>
-                </a>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <a
+                    href="https://www.tiktok.com/@pio.didau"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Xem kênh Pio Đi Đâu Đấy trên TikTok (mở tab mới)"
+                    className={`inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-primary-foreground shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${label}`}
+                  >
+                    Xem kênh TikTok <span aria-hidden="true">↗</span>
+                  </a>
+                  <a
+                    href="https://www.facebook.com/piodidauday"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Xem kênh Pio Đi Đâu Đấy trên Facebook (mở tab mới)"
+                    className={`inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-white/25 px-6 py-3 transition hover:-translate-y-0.5 hover:border-primary/35 hover:bg-primary/10 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${label}`}
+                  >
+                    Xem kênh Facebook <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
@@ -343,7 +309,7 @@ export default function Freelancer() {
               </h2>
               {(pioProject?.images?.length ?? 0) > 0 ? (
                 <div className="mt-6 overflow-hidden">
-                  <div className="mb-4 flex justify-end gap-2">
+                  <div className="mb-4 flex w-full min-w-0 justify-end gap-2">
                     <button
                       type="button"
                       aria-label="Xem ảnh trước"
@@ -393,7 +359,7 @@ export default function Freelancer() {
                             src={image.url}
                             alt={image.alt ?? image.title ?? "Pio Đi Đâu Đấy"}
                             loading="lazy"
-                            className="block h-72 w-full rounded-2xl object-contain sm:h-80"
+                            className="block h-72 w-full max-w-full rounded-2xl object-contain sm:h-80"
                           />
                         </button>
                         {image.title && (

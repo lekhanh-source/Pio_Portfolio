@@ -177,6 +177,7 @@ export default function Home() {
 
   useReveal();
   const [activeNavSection, setActiveNavSection] = useState("top");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   useEffect(() => {
     document.title = "Hoàng Thị Hậu | Content Creator & Content Marketing";
   }, []);
@@ -236,6 +237,16 @@ export default function Home() {
     filter === "All"
       ? featuredProjects
       : featuredProjects.filter((project) => project.category === filter);
+  const navLinks = [
+    { id: "about", label: "About" },
+    { id: "services", label: "project" },
+    { id: "contact", label: "Contact" },
+  ];
+
+  function scrollToSection(id: string) {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setMobileMenuOpen(false);
+  }
 
   return (
     <div className="relative overflow-x-clip">
@@ -246,90 +257,104 @@ export default function Home() {
       <header className="fixed inset-x-0 top-4 z-50 flex justify-center px-4">
         <nav
           onMouseMove={glow}
-          className="glass flex w-full max-w-5xl items-center justify-between rounded-full px-6 py-3"
+          className="mobile-nav-shell glass relative flex w-full max-w-5xl items-center justify-between rounded-full px-4 py-3 sm:px-6"
         >
           <a
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              document
-                .getElementById("top")
-                ?.scrollIntoView({ behavior: "smooth" });
+              scrollToSection("top");
             }}
             className="font-display text-lg font-extrabold tracking-tight"
           >
             <span className="text-orange-600">HẬU HOÀNG</span>
           </a>
           <div className={`hidden gap-8 md:flex ${label}`}>
-            <a
-              href="/about"
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .getElementById("about")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-              aria-current={activeNavSection === "about" ? "location" : undefined}
-              className={`hover:text-primary ${
-                activeNavSection === "about"
-                  ? "text-primary underline decoration-2 underline-offset-8"
-                  : ""
-              }`}
-            >
-              About
-            </a>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .getElementById("services")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-              aria-current={activeNavSection === "services" ? "location" : undefined}
-              className={`hover:text-primary ${
-                activeNavSection === "services"
-                  ? "text-primary underline decoration-2 underline-offset-8"
-                  : ""
-              }`}
-            >
-              project
-            </a>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-              aria-current={activeNavSection === "contact" ? "location" : undefined}
-              className={`hover:text-primary ${
-                activeNavSection === "contact"
-                  ? "text-primary underline decoration-2 underline-offset-8"
-                  : ""
-              }`}
-            >
-              Contact
-            </a>
+            {navLinks.map(({ id, label: linkLabel }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(id);
+                }}
+                aria-current={
+                  activeNavSection === id ? "location" : undefined
+                }
+                className={`hover:text-primary ${
+                  activeNavSection === id
+                    ? "text-primary underline decoration-2 underline-offset-8"
+                    : ""
+                }`}
+              >
+                {linkLabel}
+              </a>
+            ))}
           </div>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              document
-                .getElementById("contact")
-                ?.scrollIntoView({ behavior: "smooth" });
-            }}
-            aria-current={activeNavSection === "contact" ? "location" : undefined}
-            className={`rounded-full bg-foreground px-4 py-2 text-background ${label} text-[10px] ${
-              activeNavSection === "contact"
-                ? "text-white underline decoration-2 underline-offset-4"
-                : ""
-            }`}
+          <button
+            type="button"
+            onClick={() => scrollToSection("contact")}
+            className={`inline-flex rounded-full bg-foreground px-4 py-2 text-background sm:px-4 ${label} text-[9px] sm:text-[10px]`}
           >
             Hire me
-          </a>
+          </button>
+          <button
+            type="button"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-foreground/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:hidden"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              className="h-5 w-5"
+            >
+              {mobileMenuOpen ? (
+                <path d="m6 6 12 12M18 6 6 18" />
+              ) : (
+                <path d="M4 7h16M4 12h16M4 17h16" />
+              )}
+            </svg>
+          </button>
+          <div
+            id="mobile-navigation"
+            className={`mobile-nav-panel glass absolute inset-x-0 top-[calc(100%+0.5rem)] flex-col gap-1 rounded-3xl p-3 md:hidden ${
+              mobileMenuOpen ? "flex" : "hidden"
+            }`}
+          >
+            {navLinks.map(({ id, label: linkLabel }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(id);
+                }}
+                aria-current={
+                  activeNavSection === id ? "location" : undefined
+                }
+                className={`flex items-center justify-between rounded-2xl px-4 py-3 ${label} transition hover:bg-foreground/10 hover:text-primary ${
+                  activeNavSection === id
+                    ? "bg-primary/15 font-bold text-orange-700 ring-1 ring-primary/30"
+                    : ""
+                }`}
+              >
+                <span>{linkLabel}</span>
+                {activeNavSection === id && (
+                  <span
+                    aria-hidden="true"
+                    className="h-2 w-2 rounded-full bg-primary"
+                  />
+                )}
+              </a>
+            ))}
+          </div>
         </nav>
       </header>
 
@@ -528,7 +553,7 @@ export default function Home() {
         <div className="mx-auto mt-10 max-w-5xl space-y-8">
           {services.map((service) => (
             <article
-              key={service.title}
+              key={`${service.title}-${service.items[0]}`}
               onMouseMove={glow}
               className="reveal relative rounded-3xl border-2 border-dashed border-primary/75 bg-white/40 px-5 pb-5 pt-7 text-primary transition duration-300 hover:bg-primary/5 sm:px-7 cursor-pointer"
             >
@@ -576,13 +601,13 @@ export default function Home() {
         <div key={filter} className="filter-results mt-14 space-y-20">
           {shown.map((p, i) => {
             const projectUrl =
-              p.category === "FREELANCE - PARTIME"
+              p.category === "FREELANCE"
                 ? "/freelancer"
                 : `/work/${p.slug}`;
 
             return (
               <article
-                key={p.title}
+                key={p.slug}
                 className={`filter-item grid items-center gap-8 md:grid-cols-12 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}
               >
               <Link

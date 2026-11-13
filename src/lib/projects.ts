@@ -49,9 +49,9 @@ export const projects: Project[] = [
   
   {
     slug: "Freelancer",
-    title: "FREELANCE - PARTIME",
+    title: "FREELANCE",
     industry: "F&B",
-    category: "FREELANCE - PARTIME",
+    category: "FREELANCE",
     role: "Content Marketing",
     period: "--",
     image: pPage,
@@ -62,9 +62,9 @@ export const projects: Project[] = [
       "Event Runner - Hộ Kinh Doanh Mai Thanh Hùng",
       "Video editor, VJ",
     ],
-    result: "Content Marketing & thiết kế poster",
+    result: "Content Creator & thiết kế poster + Editor + Event runner",
     intro:
-      "Phụ trách Content Marketing cho Xưởng cà phê LEO Arabica: lên kế hoạch nội dung hàng tháng, triển khai kế hoạch và thiết kế poster.",
+      "",
     videos: [],
   },
 
@@ -268,16 +268,16 @@ export const projects: Project[] = [
   },
   {
     slug: "Pio",
-    title: "NHA KHOA V DENTAL",
-    industry: "Y tế · Nha khoa",
-    category: "FREELANCE - PARTIME",
+    title: "Pio Đi Đâu Đấy",
+    industry: "",
+    category: "FREELANCE",
     role: "Content Marketing",
     period: "Chưa cập nhật",
     image: pPage,
     tasks: ["Viết content", "Thiết kế poster"],
     result: "Content & thiết kế poster",
     intro:
-      "Phụ trách Content Marketing cho Nha khoa V Dental, thực hiện viết nội dung và thiết kế poster.",
+      "",
     images: [
       { title: "", url: "/images/pio_page.jpg" },
       { title: "", url: "/images/pio_di_dau.jpg" },
@@ -292,7 +292,7 @@ export const projects: Project[] = [
         stats: { views: "34,76K", likes: "471" },
       },
       {
-        title: "Ăn thử bánh mì chảo",
+        title: "Nha Trang về đêm | Ăn vặt ở đâu??",
         platform: "TikTok",
         orientation: "portrait",
         sourceFile: "/pio_video3.mp4",
